@@ -8,7 +8,6 @@
 ## Features
 
 1. Login/Sign Up.
-2. JWT Authentication.
 3. OTP Verification.
 4. Add Equipment details related to various categories like Crop Protection, Harvesting Equipment,etc
 5. Search equipments of a particular category using the title.
