@@ -11,3 +11,22 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+  /* Google Translate Styling */
+  #google_element .goog-te-gadget {
+    background-color: white;
+    border-radius: 12px;
+    padding: 5px 10px;
+    color: white;
+    font-weight: bold;
+  }
+  
+  #google_element .goog-te-gadget select {
+    background-color: green;
+    color: white;
+    border-color: red;
+    border-radius: 12px;
+    padding: 5px;
+    border: 1px solid red;
+  }
+  

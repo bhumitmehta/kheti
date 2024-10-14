@@ -11,6 +11,12 @@
 # production
 /build
 
+
+src\firebase.js
+backend\firebase.js
+backend\kehtisahayaak-firebase-adminsdk-1kbh4-71b645733c.json
+# misc
+
 # misc
 .DS_Store
 .env.local

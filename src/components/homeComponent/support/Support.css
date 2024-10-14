@@ -1,0 +1,76 @@
+/* Support Section Styling */
+.support-container {
+    padding: 4rem 2rem;
+    background-color: #f9f9f9;
+}
+
+.support-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    color: #333;
+}
+
+.support-description {
+    font-size: 1.125rem;
+    text-align: center;
+    margin: 1rem auto 4rem auto;
+    color: #666;
+    max-width: 600px;
+    opacity: 0.85;
+}
+
+.support-items {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.support-item {
+    background-color: white;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    padding: 2rem;
+    border-radius: 15px;
+    width: 300px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.support-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.support-img {
+    height: 80px;
+    width: 80px;
+    margin: auto;
+    margin-bottom: 1.5rem;
+}
+
+.support-item h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #219653;
+    margin-bottom: 0.75rem;
+}
+
+.support-item p {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .support-items {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .support-item {
+        width: 90%;
+        margin-bottom: 2rem;
+    }
+}

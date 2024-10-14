@@ -1,0 +1,62 @@
+.footerLogo {
+  height: 100px;
+  width: 100px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.footerLogo:hover {
+  transform: scale(1.1);
+}
+
+.footerBgImg {
+  height: 150px;
+  width: 150px;
+  opacity: 0.8;
+}
+
+.socialIcons {
+  height: 40px;
+  width: 40px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.socialIcons:hover {
+  transform: scale(1.1);
+}
+
+.bg-gradient-to-r {
+  background-image: linear-gradient(to right, #2d6a4f, #40916c);
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.hover\\:scale-110:hover {
+  transform: scale(1.1);
+}
+
+.transition {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    padding: 0 20px; /* Adjust padding for mobile */
+  }
+
+  .flex-1 {
+    width: 100%; /* Ensure full width on small screens */
+    border-right: none; /* Remove right border */
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3); /* Add bottom border for separation */
+    margin-bottom: 20px; /* Add space between sections */
+  }
+
+  /* Ensure proper alignment for the last section */
+  .flex-1:last-child {
+    border-bottom: none; /* Remove bottom border for the last item */
+  }
+}

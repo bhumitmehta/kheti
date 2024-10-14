@@ -1,0 +1,27 @@
+/* Alert.css */
+
+.alert-popup {
+  position: fixed; /* or absolute */
+  bottom: 20px; /* Space from the bottom */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Center adjustment */
+  z-index: 1000; /* Ensure it appears above other elements */
+  width: 80%; /* Adjust width as needed */
+  max-width: 400px; /* Maximum width */
+  opacity: 0; /* Start hidden */
+  transition: opacity 0.5s ease, transform 0.5s ease; /* Animation for opacity and transform */
+  transform: translate(-50%, 20px); /* Slightly move it down initially */
+}
+
+.alert-popup.show {
+  opacity: 1; /* Show alert */
+  transform: translate(-50%, 0); /* Slide it up */
+}
+
+.alert-popup .alert {
+  margin: 0; /* Remove default margin */
+  padding: 15px; /* Add padding */
+  border-radius: 5px; /* Rounded corners */
+  display: flex; /* Use flex for icon and text */
+  align-items: center; /* Center icon and text */
+}

@@ -1,0 +1,16 @@
+.equipTitle {
+  margin-top: 10px;
+}
+
+.equipImg {
+  transition: transform 0.3s ease-in-out;
+}
+
+.equipImg:hover {
+  transform: scale(1.05);
+}
+
+/* Optionally, for the selected state */
+.selected {
+  border: 2px solid green;
+}
