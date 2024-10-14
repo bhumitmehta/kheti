@@ -1,7 +1,88 @@
-.input-style {
-  border: 1.5px solid #F1F1F1;
-box-sizing: border-box;
-box-shadow: inset 0px 4px 4px rgba(104, 172, 93, 0.25);
-border-radius: 4px;
+.input-field-container .input-field-element {
+  margin: 8px;
+}
 
+.input-field-container .group {
+  position: relative;
+  margin-bottom: 45px;
+}
+
+.input-field-container .input-field {
+  font-size: var(--font-size-normal);
+  padding: 10px 10px 10px 5px;
+  display: block;
+  width: 300px;
+  border: none;
+  border-bottom: 1px solid var(--primary-dark);
+}
+
+.input-field-container .input-field:focus {
+  outline: none;
+}
+
+.input-field-container label {
+  color: #999;
+  font-size: var(--font-size-normal);
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 5px;
+  top: 10px;
+  transition: 0.2s ease all;
+}
+
+.input-field-container .input-field:focus ~ label,
+.input-field-container .input-field:valid ~ label {
+  top: -20px;
+  font-size: var(--font-size-label-input);
+  color: var(--primary);
+}
+
+.input-field-container .bar {
+  position: relative;
+  display: block;
+  width: 300px;
+}
+
+.input-field-container .bar:before,
+.input-field-container .bar:after {
+  content: "";
+  height: 2px;
+  width: 0;
+  position: absolute;
+  background: var(--primary-dark);
+  transition: 0.2s ease all;
+}
+
+.input-field-container .bar:before {
+  left: 50%;
+}
+
+.input-field-container .bar:after {
+  right: 50%;
+}
+
+.input-field-container .input-field:focus ~ .bar:before,
+.input-field-container .input-field:focus ~ .bar:after {
+  width: 50%;
+  background: var(--highlight-color); /* New color when focused */
+}
+
+.input-field-container .highlight {
+  background: var(--primary-dark);
+}
+
+.input-field-container .input-field:focus ~ .highlight {
+  background: var(--highlight-color);
+  animation: inputHighlighter 0.3s ease;
+}
+
+@keyframes inputHighlighter {
+  from {
+    background: var(--highlight-color);
+  }
+  to {
+    width: 0;
+    background: transparent;
+  }
 }

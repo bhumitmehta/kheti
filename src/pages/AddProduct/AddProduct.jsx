@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { db, storage } from "../../firebase"; // Import db and storage from Firebase config
+import { addDoc, collection } from "firebase/firestore"; // Firestore methods
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Storage methods
 import Step1 from "./Steps/step1";
 import Step2 from "./Steps/step2";
 import Step3 from "./Steps/step3";
 import Sidebar from "./Sidebar"; // Import the Sidebar component
+import { getAuth } from "firebase/auth"; // Import the getAuth function
 
 const AddProduct = () => {
   const [step, setStep] = useState(1); // Track the form step
@@ -13,7 +17,7 @@ const AddProduct = () => {
   const navigate = useNavigate();
 
   const [data, setData] = useState({
-    images: [],
+    images: [], // Will store image URLs
     equipment_type: '',
     manufacturer: '',
     model_type: '',
@@ -22,7 +26,7 @@ const AddProduct = () => {
     uuid: '',
     daily_rent: 0,
     available_from: Date(),
-    avaiable_till: Date(),
+    available_till: Date(),
     location: {
       lattitude: null,
       longitude: null,
@@ -72,17 +76,58 @@ const AddProduct = () => {
 
   const handleCreateEquipment = async (e) => {
     e.preventDefault();
-
+  
     try {
-      const res = { data: { success: true, message: "Equipment created successfully!" } };
-      if (res.data.success) {
-        alert(res.data.message);
-        navigate("/booking-history");
+      let imageUrls = []; // Array to hold all image URLs
+  
+      // Get the user's UID using Firebase Auth
+      const auth = getAuth(); // Get the Auth instance
+      const user = auth.currentUser; // Get the currently signed-in user
+      const userUid = user ? user.uid : null; // Get the user's UID (or null if not signed in)
+  
+      // Check if user is authenticated
+      if (!userUid) {
+        alert("User is not authenticated. Please log in.");
+        return; // Exit the function if no user is logged in
+      }
+  
+      // Iterate through each image in data.images
+      for (const image of data.images) {
+        if (image) {
+          // Create a unique reference for each image using its name and lastModifiedDate
+          const imageRef = ref(storage, `equipmentImages/${image.name}_${image.lastModifiedDate}`);
+          console.log("Uploading image:", imageRef.fullPath);
+  
+          // Upload the image to Firebase Storage
+          await uploadBytes(imageRef, image);
+          
+          // Get the download URL after successful upload
+          const downloadUrl = await getDownloadURL(imageRef);
+          imageUrls.push(downloadUrl); // Add the URL to the array
+        }
+      }
+  
+      // Prepare the data with all image URLs and remove specific fields
+      const { equipment_type, manufacturer, model_type, model_name, ...remainingData } = data;
+  
+      const equipmentData = {
+        ...remainingData,
+        images: imageUrls, // Include all image URLs in the data object
+        uuid: userUid, // Add the user's UID
+      };
+  
+      // Add the equipment data to Firestore
+      const docRef = await addDoc(collection(db, "equipmentListings"), equipmentData);
+      
+      if (docRef.id) {
+        alert("Equipment created successfully!");
+        navigate("/booking-history"); // Navigate to the booking history page after successful upload
       }
     } catch (error) {
       console.error("Error creating equipment:", error);
     }
   };
+  
 
   const handleImageUpload = (e) => {
     setImage(e.target.files[0]); // Set uploaded image
@@ -134,7 +179,7 @@ const AddProduct = () => {
           )}
         </form>
       </div>
-      <Sidebar data={data} setData ={setData} /> {/* Add Sidebar to display selected details */}
+      <Sidebar data={data} setData={setData} /> {/* Add Sidebar to display selected details */}
     </div>
   );
 };

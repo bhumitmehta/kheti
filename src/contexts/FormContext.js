@@ -21,7 +21,7 @@ export const FormProvider = ({ children }) => {
         uuid: '',
         daily_rent: 0,
         available_from: Date(),
-        avaiable_till : Date(),
+        available_till : Date(),
         location: {
             lattitude:null,
             longitude:null,

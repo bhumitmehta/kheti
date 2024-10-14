@@ -4,7 +4,7 @@ const Sidebar = ({ data, setData }) => {
     console.log(data.images)
   return (
     
-    <div className="w-1/3 border-l border-gray-300 p-6 bg-white shadow-md rounded-lg">
+    <div className="w-1/3 border-l border-gray-300 p-6 bg-white shadow-md rounded-lg m-1 mr-4">
       <h2 className="text-xl font-semibold mb-4 text-gray-800">Selected Details</h2>
       <div className="space-y-4">
         <div className="flex justify-between">

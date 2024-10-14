@@ -57,8 +57,9 @@ const Step2 = ({ data, setData, nextStep, prevStep }) => {
   };
 
   const handleEquipmentClick = (model) => {
-    console.log(model)
-    setData({ ...data, model, model_name: model.model_name ,specs : model.specs });
+    console.log(model.id)
+    setData({ ...data, equipment_id: model.id, model_name: model.model_name ,specs : model.specs });
+    console.log(data) 
     setIsModelSelected(true); // Enable Next button when a model is selected
     setSelectedModel(model); // Track the selected model
   };
