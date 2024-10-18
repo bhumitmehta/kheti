@@ -1,6 +1,8 @@
 import axios from "axios";
-import instance from "../config";
-import Cookies from "js-cookie";
+// import instance from "../config";
+// import Cookies from "js-cookie";
+import { collection, getDocs,where, query ,doc,setDoc,getDoc} from "firebase/firestore";
+import {db} from '../../firebase'
 
 const url = "http://localhost:8000"; // Replace with your backend URL
 
@@ -38,33 +40,54 @@ const dummyModels = {
 
 // Fetch all equipment names (tractors, harvesters, etc.)
 export const getEquipments = async () => {
+  
+  const equipmentList = [];
   try {
-    const response = await axios.get(`${url}/api/equipments`);
-    return response.data || dummyEquipments; // Return server data or dummy data
+    const querySnapshot = await getDocs(collection(db, "equipmentListings"));
+    console.log(querySnapshot)
+    querySnapshot.forEach((doc) => {
+      equipmentList.push({ id: doc.id, ...doc.data() });
+    });
+    return equipmentList.length ? equipmentList : dummyEquipments;
   } catch (error) {
-    console.log("Error while calling getEquipments API", error);
+    console.log("Error while fetching equipment data from Firebase", error);
     return dummyEquipments; // Return dummy data on error
   }
 };
 
 // Fetch all brands based on equipment type (e.g., tractor)
 export const getBrandsByEquipmentType = async (equipmentType) => {
+  const brandList = [];
   try {
-    const response = await axios.get(`${url}/api/equipment/equipment_type?type=${equipmentType}`);
-    return response.data || dummyBrands[equipmentType] || []; // Return server data or dummy data
+    const q = query(collection(db, "brands"), where("equipment_type", "==", equipmentType));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      brandList.push({ id: doc.id, ...doc.data() });
+    });
+    return brandList.length ? brandList : dummyBrands[equipmentType] || [];
   } catch (error) {
     console.log(`Error while fetching brands for ${equipmentType}`, error);
     return dummyBrands[equipmentType] || []; // Return dummy data on error
   }
 };
 
+
 // Fetch all models based on equipment type and brand (e.g., tractor & Mahindra)
 export const getModelsByBrand = async (equipmentType, brand) => {
+  const modelList = [];
   try {
-    const response = await axios.get(`${url}/api/equipment/equipment_type?type=${equipmentType}&brand=${brand}`);
-    return response.data || dummyModels[brand.toLowerCase()] || []; // Return server data or dummy data
+    const q = query(
+      collection(db, "models"),
+      where("equipment_type", "==", equipmentType),
+      where("brand", "==", brand)
+    );
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      modelList.push({ id: doc.id, ...doc.data() });
+    });
+    return modelList.length ? modelList : dummyModels[brand.toLowerCase()] || [];
   } catch (error) {
-    console.log(`Error while fetching models for ${brand} in ${equipmentType}`, error);
+    console.log(`Error while fetching models for ${brand}`, error);
     return dummyModels[brand.toLowerCase()] || []; // Return dummy data on error
   }
 };
@@ -72,143 +95,71 @@ export const getModelsByBrand = async (equipmentType, brand) => {
 // Fetch specific equipment details based on equipment type, brand, and model
 export const getEquipmentDetails = async (equipmentType, brand, model) => {
   try {
-    const response = await axios.get(
-      `${url}/api/equipment/equipment_type?type=${equipmentType}&brand=${brand}&model=${model}`
+    const q = query(
+      collection(db, "equipmentListings"),
+      where("equipment_type", "==", equipmentType),
+      where("brand", "==", brand),
+      where("model", "==", model)
     );
-    return response.data || null; // Return server data or null if not found
+    const querySnapshot = await getDocs(q);
+    if (!querySnapshot.empty) {
+      const doc = querySnapshot.docs[0]; // Assuming one document matches the query
+      return { id: doc.id, ...doc.data() };
+    }
+    return null;
   } catch (error) {
     console.log(`Error while fetching equipment details for ${brand} ${model}`, error);
-    return null; // Return null on error
+    return null;
   }
 };
 
 // Create a report for specific equipment
-export const createEquipmentReport = async ({
-  equipment,
-  report_reason,
-  description,
-}) => {
+export const createEquipmentReport = async ({ equipment, report_reason, description }) => {
   try {
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${Cookies.get("access-token")}`,
-    };
-    const response = await instance.post(
-      "/enquiry/report-equipment",
-      {
-        equipment,
-        report_reason,
-        description,
-      },
-      { headers }
-    );
-    return response.data || null; // Return server response or null on failure
-  } catch (error) {
-    console.log("Error while calling createEquipmentReport API", error);
-    return null; // Return null on error
-  }
-};
-
-// Create new equipment entry on the server
-export const createEquipment = async ({
-  owner,
-  manufacturer,
-  title,
-  description,
-  equipment_type,
-  available_start_time,
-  available_end_time,
-  equipment_location,
-  daily_rental,
-  hourly_rental,
-  manufacturing_year,
-  model,
-  condition,
-  horsepower,
-  width,
-  height,
-}) => {
-  try {
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${Cookies.get("access-token")}`,
-    };
-    const response = await instance.post(
-      "/api/equipment/create/",
-      {
-        owner,
-        manufacturer,
-        title,
-        description,
-        equipment_type,
-        available_start_time,
-        available_end_time,
-        equipment_location,
-        daily_rental,
-        hourly_rental,
-        manufacturing_year,
-        model,
-        condition,
-        horsepower,
-        width,
-        height,
-      },
-      { headers }
-    );
-    return response.data || null; // Return server response or null on failure
-  } catch (error) {
-    console.log("Error while calling createEquipment API", error);
-    return null; // Return null on error
-  }
-};
-
-// Booking api
-
-// export const getBookings = async () => {
-//     try {
-//         const headers = {
-//             "Content-Type": "application/json",
-//             Authorization: `"Bearer ${Cookies.get('access-token')}`
-//         };
-//         return await axios.get('/api/booking' , { headers });
-//     } catch(error) {
-//         console.log('Error while calling getBookings API', error);
-//     }
-// }
-
-// export const getBookingDetail = async (id) => {
-//     try {
-//         const headers = {
-//             "Content-Type": "application/json",
-//             Authorization: `"Bearer ${Cookies.get('access-token')}`
-//         };
-//         return await axios.get(`/api/booking/detail/${id}` , { headers });
-//     } catch(error) {
-//         console.log('Error while calling getBookingDetail API', error);
-//     }
-// }
-
-// export const updateBooking = async (data, id) => {
-//     try {
-//         const headers = {
-//             "Content-Type": "application/json",
-//             Authorization: `"Bearer ${Cookies.get('access-token')}`
-//         };
-//         return await axios.get(`/api/booking/update/${id}` , { data }, { headers });
-//     } catch(error) {
-//         console.log('Error while calling getBookingDetail API', error);
-//     }
-// }
-
-//  Feedback
-export const submitFeedback = async ({ name, phone_number, description }) => {
-  try {
-    return await axios.post("/enquiry/feedback", {
-      name,
-      phone_number,
+    const reportDoc = doc(db, "equipment_reports", equipment.id); // Create report under `equipment_reports` collection
+    await setDoc(reportDoc, {
+      equipment,
+      report_reason,
       description,
+      reported_at: new Date(),
     });
+    return { success: true };
   } catch (error) {
-    console.log("Error while calling submitFeedback API", error);
+    console.log("Error while creating equipment report", error);
+    return null;
+  }
+};
+
+export const getEquipmentsWithUserData = async () => {
+  const equipmentList = [];
+
+  try {
+    // Fetch equipment listings
+    const equipmentSnapshot = await getDocs(collection(db, "equipmentListings"));
+    
+    // Loop through each equipment and fetch user data based on the UUID
+    for (const equipmentDoc of equipmentSnapshot.docs) {
+      const equipmentData = { id: equipmentDoc.id, ...equipmentDoc.data() };
+      const { uuid } = equipmentData;
+      let uid = uuid
+      if (uuid) {
+        // Fetch user data for the equipment based on the UUID
+        const userDoc = await getDoc(doc(db, "users", uid));
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          equipmentData.user = { id: userDoc.id, ...userData }; // Attach user data to equipment
+        } else {
+          console.log(`User with uuid: ${uuid} not found.`);
+          equipmentData.user = null; // Set to null if user is not found
+        }
+      }
+
+      equipmentList.push(equipmentData);
+    }
+
+    return equipmentList.length ? equipmentList : dummyEquipments;
+  } catch (error) {
+    console.log("Error while fetching equipment and user data from Firebase", error);
+    return dummyEquipments; // Return dummy data on error
   }
 };

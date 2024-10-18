@@ -83,6 +83,7 @@ function App() {
         <Route path="equipment-report/:id" element={<EquipmentReport />} />
         <Route path="blog" element={<BlogPostPage />} />
         <Route path="chatbot" element={<ChatbotPage />} />
+        
         {/* Protected Routes */}
         <Route
           path="dashboard"
