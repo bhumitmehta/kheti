@@ -45,7 +45,11 @@ export const postRegisterData = async ({
 
     return Promise.resolve(user);
   } catch (error) {
-    return Promise.reject(error.message);
+    if (error.message === "Firebase: Error (auth/email-already-in-use)."){
+      error.message = "Email Already in use do u what to login "
+      return Promise.reject(error);
+    }
+    return Promise.reject(error);
   }
 };
 

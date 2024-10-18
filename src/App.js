@@ -78,7 +78,7 @@ function App() {
         <Route path="contact" element={<ContactUs />} />
         <Route path="product/:id" element={<Product />} />
         <Route path="equipment-report/:id" element={<EquipmentReport />} />
-
+        
         {/* Protected Routes */}
         <Route
           path="dashboard"
