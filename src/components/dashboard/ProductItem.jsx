@@ -107,11 +107,11 @@ const ProductItem = ({ equipment }) => {
     const navigate = useNavigate();
     console.log(equipment)
     return (
-        <div class="flex justify-center items-center p-1 my-2">
-    <div class=" mx-0  ">
+        <div className="flex justify-center items-center p-1 my-2">
+    <div className=" mx-0  ">
      
-        <div class="relative flex max-w-[18rem] flex-col overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
-            <div class="relative m-0 overflow-hidden text-gray-700 bg-transparent rounded-none shadow-none bg-clip-border">
+        <div className="relative flex max-w-[18rem] flex-col overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+            <div className="relative m-0 overflow-hidden text-gray-700 bg-transparent rounded-none shadow-none bg-clip-border">
             <Link to={`/product/${equipment.id}`}>
             <img 
                         // style={{ height: '220px', width: '230px', objectFit: 'cover' }} 
@@ -119,21 +119,21 @@ const ProductItem = ({ equipment }) => {
                         alt={equipment?.equipment_id || "Equipment Image"} 
                     /></Link>
             </div>
-            <div class="p-6">
-                <h4 class="block font-sans text-2xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+            <div className="p-6">
+                <h4 className="block font-sans text-2xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
                     UI/UX Review Check
                 </h4>
-                <p class="block mt-3 font-sans text-xl antialiased font-normal leading-relaxed text-gray-700">
+                <p className="block mt-3 font-sans text-xl antialiased font-normal leading-relaxed text-gray-700">
                     Because it&apos;s about motivating the doers. Because I&apos;m here to follow my dreams and inspire others.
                 </p>
             </div>
-            <div class="flex items-center justify-between p-6">
-                <div class="flex items-center -space-x-3">
+            <div className="flex items-center justify-between p-6">
+                <div className="flex items-center -space-x-3">
                     <img alt="natali craig"
                         src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1061&amp;q=80"
-                        class="relative inline-block h-9 w-9 rounded-full border-2 border-white object-cover object-center hover:z-10" />
+                        className="relative inline-block h-9 w-9 rounded-full border-2 border-white object-cover object-center hover:z-10" />
                 </div>
-                <p class="block font-sans text-base antialiased font-normal leading-relaxed text-inherit">
+                <p className="block font-sans text-base antialiased font-normal leading-relaxed text-inherit">
                     January 10
                 </p>
             </div>

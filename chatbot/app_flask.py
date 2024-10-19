@@ -10,9 +10,13 @@ from ibm_watsonx_ai.foundation_models.utils.enums import ModelTypes, DecodingMet
 import os
 from dotenv import load_dotenv
 from langchain_ibm import WatsonxLLM
-from flask_cors import CORS 
+from flask_cors import CORS
 # Initialize Flask app
 import re
+
+
+
+
 
 app = Flask(__name__)
 CORS(app)
@@ -37,6 +41,8 @@ llm = WatsonxLLM(
     project_id="07801c61-2551-43cb-ac7a-09a4d3a43c86",
     params=parameters,
 )
+ 
+ 
 
 print("Model initialized successfully")
 
@@ -110,4 +116,4 @@ def add_data():
 
 # Run the Flask app
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True)                       

@@ -1,15 +1,15 @@
 import "./App.css";
 import Home from "./pages/Home";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getProfile } from "./api/userdata/profile.js";
-import {
-  getLoginAction,
-  getSaveProfileAction,
-  getSaveTokenAction
-} from "./redux/actions";
+// import { useEffect } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import { getProfile } from "./api/userdata/profile.js";
+// import {
+//   getLoginAction,
+//   getSaveProfileAction,
+//   getSaveTokenAction
+// } from "./redux/actions";
 import { Routes, Route } from "react-router-dom";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 
 
 // Import your pages
@@ -36,42 +36,43 @@ import Alert from './utils/alert';
 import ChatbotPage from "./pages/Blog/ChatBot.jsx";
 
 function App() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   // Fetch and set token from cookies
-  useEffect(() => {
-    const access = Cookies.get("access-token");
-    const refresh = Cookies.get("refresh-token");
-    dispatch(
-      getSaveTokenAction({
-        accessToken: access,
-        refreshToken: refresh
-      })
-    );
-  }, [dispatch]);
+  // useEffect(() => {
+  //   const access = Cookies.get("access-token");
+  //   const refresh = Cookies.get("refresh-token");
+  //   dispatch(
+  //     getSaveTokenAction({
+  //       accessToken: access,
+  //       refreshToken: refresh
+  //     })
+  //   );
+  // }, [dispatch]);
 
   // Fetch and set user profile based on access token
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      const access = Cookies.get("access-token");
-      if (access) {
-        const uuid = Cookies.get("uuid");
-        dispatch(getLoginAction());
-        const data = await getProfile({
-          uuid: uuid,
-          accessToken: access
-        });
-        dispatch(getSaveProfileAction(data));
-      }
-    };
+  // useEffect(() => {
+  //   const fetchUserProfile = async () => {
+  //     const access = Cookies.get("access-token");
+  //     if (access) {
+  //       const uuid = Cookies.get("uuid");
+  //       dispatch(getLoginAction());
+  //       const data = await getProfile({
+  //         uuid: uuid,
+  //         accessToken: access
+  //       });
+  //       dispatch(getSaveProfileAction(data));
+  //     }
+  //   };
 
-    fetchUserProfile();
-  }, [dispatch]);
+  //   fetchUserProfile();
+  // }, [dispatch]);
 
   return (
     <>
       <Header />
       <Routes>
+  
         <Route path="/" element={<Home />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />

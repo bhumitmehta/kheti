@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+// import { useSelector, useDispatch } from "react-redux";
 import Cookies from "js-cookie";
-import { getLogoutAction } from "../../redux/actions";
+// import { getLogoutAction } from "../../redux/actions";
 
 import logo from "../../img/logo.png";
 import userIcon from "../../img/user_icon.svg";
@@ -13,20 +13,20 @@ import "./header.css";
 
 const Header = () => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const authState = useSelector((state) => state.authReducer);
+    // const dispatch = useDispatch();
+    // const authState = useSelector((state) => state.authReducer);
     const [show, setShow] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
     const [showRegister, setShowRegister] = useState(false);
-  
 
-  
+
+
     return (
       <div className="header">
         {/* Logo and Title */}
         <div className="header-logo" onClick={() => navigate("/")}>
           <img src={logo} alt="logo" />
-          <h3>Krishi Sahhaayaak</h3>
+          <h3>Kethi Sahhaayaak</h3>
         </div>
   
         {/* Navigation Links */}
@@ -36,6 +36,7 @@ const Header = () => {
             <li onClick={() => navigate("/dashboard")}>Dashboard</li>
             <li onClick={() => navigate("/addProduct")}>Add Product</li>
             <li onClick={() => navigate("/help")}>Help</li>
+            <li onClick={()=>navigate("/blog")}>Blog</li>
           </ul>
         </nav>
   
@@ -46,26 +47,26 @@ const Header = () => {
               <button onClick={() => setShowLogin(true)}>Login</button>
               <button onClick={() => setShowRegister(true)}>Sign Up</button>
             </>
-          ) : (
+          )  :  (
             <div
               className="profile-section"
               onMouseOver={() => setShow(true)}
               onMouseLeave={() => setShow(false)}
             >
               <div className="profile-dropdown-trigger">
-                <img className="rounded-full w-8 h-8 mr-3" src={userIcon} alt="profile_pic" />
-                <p>{"Hi, " + authState.user.data.first_name}</p>
+              <img className="rounded-full w-8 h-8 mr-3" src={userIcon} alt="profile_pic" />
+                <p>{}</p>
               </div>
               {show && (
                 <div className="profile-dropdown">
                   <p onClick={() => navigate("/update-profile")}>Profile</p>
                   <p
                     onClick={() => {
-                      Cookies.remove("access-token");
-                      Cookies.remove("refresh-token");
-                      Cookies.remove("uuid");
-                      dispatch(getLogoutAction());
-                      navigate("/login");
+                      // Cookies.remove("access-token");
+                      // Cookies.remove("refresh-token");
+                      // Cookies.remove("uuid");
+                      // dispatch(getLogoutAction());
+                      // navigate("/login");
                     }}
                   >
                     Logout

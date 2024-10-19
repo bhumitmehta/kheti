@@ -5,31 +5,36 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import ErrorBoundary from './utils/ErrorBoundary'
 import { BrowserRouter } from "react-router-dom";
-import store from "./redux/store";
-import { Provider } from "react-redux";
-import { CookiesProvider } from "react-cookie";
+// import store from "./redux/store";
+// import { Provider } from "react-redux";
+// import { CookiesProvider } from "react-cookie";
 
 import { AlertProvider } from "../src/contexts/AlertContext";
 // Create a root element with React 18
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
- 
-  <CookiesProvider>
+ <>
+  {/* // <CookiesProvider> */}
    
-    <Provider store={store}>
-      <BrowserRouter>
+    {/* <Provider store={store}> */}
+    
+      
         <React.StrictMode>
+        <BrowserRouter>
         <ErrorBoundary>
           <AlertProvider>
           <App />
           </AlertProvider>
           </ErrorBoundary>
+          </BrowserRouter>
         </React.StrictMode>
-      </BrowserRouter>
-    </Provider>
+      
+
+    {/* // </Provider> */}
    
-  </CookiesProvider>
+  {/* // </CookiesProvider> */}
+  </>
  
 );
 
