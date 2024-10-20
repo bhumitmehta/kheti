@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import ErrorBoundary from './utils/ErrorBoundary'
 import { BrowserRouter } from "react-router-dom";
+import { AuthContextProvider } from './contexts/AuthContext';
 // import store from "./redux/store";
 // import { Provider } from "react-redux";
 // import { CookiesProvider } from "react-cookie";
@@ -22,10 +23,13 @@ root.render(
       
         <React.StrictMode>
         <BrowserRouter>
+
         <ErrorBoundary>
+        < AuthContextProvider>
           <AlertProvider>
           <App />
           </AlertProvider>
+          </AuthContextProvider>
           </ErrorBoundary>
           </BrowserRouter>
         </React.StrictMode>

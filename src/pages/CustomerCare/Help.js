@@ -1,7 +1,7 @@
 import React from "react";
 
 //Components
-import ExpandDropdown from "../../components/expanddropdown";
+import ExpandDropdown from "../../components/expanddropdown/Dropdown";
 
 const Help = () => {
   const booking_help = [

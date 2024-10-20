@@ -1,44 +1,21 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
-
-// Components
+import React, { useState, useContext } from "react";
+import { useAlert } from "../../contexts/AlertContext"; // Import the Alert context
 import InputField from "../../components/input/InputField";
 import Loader from "../../components/loader/loader.jsx";
-import Alert from "../../utils/alert.jsx"; // Reusable alert components
+import Alert from "../../utils/alert.jsx"; // Reusable alert component
+import { AuthContext } from "../../contexts/AuthContext"; // Import AuthContext
+import { postLoginDataEmail } from "../../api/userdata/auth"; // Import API method
 
-// Functions
-import {
-  postLoginDataEmail,
-  postLoginDataPhone,
-  verifyOtpLogin
-} from "../../api/userdata/auth";
-import {
-  getLoginAction,
-  getSaveTokenAction,
-  getSaveProfileAction
-} from "../../redux/actions";
-
-// Images
 import logo from "../../img/logo.png";
 import cross_black from "../../img/cross_black.svg";
 
 const Login = ({ onClick }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [message, setMessage] = useState("");
-  const [showOTP, setShowOTP] = useState(false);
-  const [data, setData] = useState();
-  const [OTP, setOTP] = useState("");
-  const [successOTP, setSuccessOTP] = useState(false);
-  const [error, setError] = useState(false);
-  const [alertType, setAlertType] = useState("");
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+
+  const { showAlert } = useAlert(); // Using the alert context
+  const { setCurrentUser } = useContext(AuthContext); // Access setCurrentUser from AuthContext
 
   async function handleLoginEmail(e) {
     e.preventDefault();
@@ -46,31 +23,22 @@ const Login = ({ onClick }) => {
     try {
       const response = await postLoginDataEmail({ email, password });
       if (response) {
+        // Simulate the user object returned by your API
+        const user = {
+          email: response.email,
+          token: response.token, // Assuming token is part of the response
+        };
+
+        // Set the authenticated user in the AuthContext
+        setCurrentUser(user);
+
         setLoading(false);
-        setSuccess(true);
-        setMessage(response.message);
-
+        showAlert("success", "Login successful");
+        onClick(false); // Close the login modal
       }
     } catch (err) {
       setLoading(false);
-      setSuccess(false);
-      setMessage("Server Issue, Try again later");
-      console.error(err);
-    }
-  }
-
-  async function handleLoginPhone() {
-    setShowOTP(true);
-    try {
-      const response = await postLoginDataPhone({ phone_number: phoneNumber });
-      if (response.success) {
-        setData(response);
-        setShowOTP(true);
-      }
-    } catch (err) {
-      setSuccess(false);
-      setLoading(false);
-      setMessage("Server Issue, Try again later");
+      showAlert("danger", `${err.message}`); // Show error alert
       console.error(err);
     }
   }
@@ -87,8 +55,8 @@ const Login = ({ onClick }) => {
       </div>
 
       {loading && <Loader />}
-      {/* LOGIN FORM SCREEN */}
-      <div className={`filter ${loading ? "blur-sm" : "none"} ${showOTP ? "hidden" : "block"}`}>
+      <Alert /> {/* Place the Alert component here */}
+      <div className={`filter ${loading ? "blur-sm" : "none"}`}>
         <div className="flex justify-center py-12">
           <div className="bg-green-600 rounded-xl py-16 px-5 w-full md:w-2/3 lg:w-2/3 xl:w-2/3 max-w-lg">
             <form
@@ -124,8 +92,6 @@ const Login = ({ onClick }) => {
               >
                 Login
               </button>
-
-             
 
               <p className="text-lg mt-5 underline cursor-pointer">Forgot Password?</p>
             </form>

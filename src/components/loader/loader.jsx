@@ -1,18 +1,21 @@
 import React from "react";
-// import Lottie from "react-lottie
+import Lottie from "react-lottie";
+import * as animationData from "../../animations/tractor.json";
+
+const defaultOptions = {
+  loop: true,
+  autoplay: true,
+  animationData: animationData.default,
+  rendererSettings: {
+    preserveAspectRatio: "xMidYMid slice",
+  },
+};
 
 const Loader = () => {
   return (
-    <div
-    className="d-flex align-items-center justify-content-center"
-    style={{ minHeight: "80vh" }}
-  >
-    <div className="d-flex justify-content-center">
-      <div className="spinner-border" role="status">
-        <span className="visually-hidden">Loading...</span>
-      </div>
+    <div style={{ marginTop: "10rem" }}>
+      <Lottie options={defaultOptions} height={150} width={150} />
     </div>
-  </div>
   );
 };
 

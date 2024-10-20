@@ -10,8 +10,6 @@ import Home from "./pages/Home";
 // } from "./redux/actions";
 import { Routes, Route } from "react-router-dom";
 // import Cookies from "js-cookie";
-
-
 // Import your pages
 import Register from "./pages/Authentication/Register";
 import Login from "./pages/Authentication/Login";

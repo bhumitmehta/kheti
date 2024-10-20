@@ -27,7 +27,7 @@ const Alert = () => {
 
   return (
     <div
-      className={`fixed bottom-0 left-1/2 transform -translate-x-1/2 p-4 mb-4 rounded-lg shadow-lg transition-transform duration-300 ease-in-out ${alertStyles[alertType]}`}
+      className={`fixed bottom-3/4 right-1 transform -translate-x-11 p-4  rounded-lg shadow-lg transition-transform duration-300 ease-in-out ${alertStyles[alertType]}`}
       role="alert"
       style={{ zIndex: 9999 }} // Ensures it's on top of other elements
     >
@@ -50,15 +50,15 @@ const Alert = () => {
             <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
           )}
         </svg>
-        <div className="text-sm font-medium">{alertMessage}</div>
+        <div className="text-sm font-medium pr-1">{alertMessage}</div>
         <button
           type="button"
-          className="ml-auto bg-transparent text-gray-500 hover:text-gray-700 focus:outline-none"
+          className="ml-auto bg-transparent  text-gray-500 hover:text-gray-700 focus:outline-none"
           onClick={clearAlert}
           aria-label="Close"
         >
           <svg
-            className="w-4 h-4"
+            className="w-4 h-4 pl-0.5"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

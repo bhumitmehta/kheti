@@ -68,9 +68,13 @@ export const postLoginDataEmail = async ({ email, password }) => {
       user, // user object with user details
       token, // ID token for secure backend interactions
     });
-  } catch (err) {
-    console.log(err.message);
-    return Promise.reject(err.message); // Return error message
+  } catch (error) {
+    if (error.message ==="Firebase: Error (auth/invalid-credential)." ){
+      error.message = "Invalid email or password"
+      return Promise.reject(error);
+}
+    console.log(error.message);
+    return Promise.reject(error.message); // Return error message
   }
 };
 
@@ -88,6 +92,10 @@ export const postLoginDataPhone = async ({ phone_number }) => {
     // Store the confirmation result and return it for further OTP verification
     return Promise.resolve(confirmationResult);
   } catch (error) {
+    if (error.message ==="Firebase: Error (auth/invalid-credential)." ){
+              error.message = "Invalid email or password"
+        return Promise.reject(error);
+      }
     return Promise.reject(error.message);
   }
 };
