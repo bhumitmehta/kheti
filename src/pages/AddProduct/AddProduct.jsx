@@ -136,13 +136,38 @@ const AddProduct = () => {
   const nextStep = () => setStep((prev) => prev + 1);
   const prevStep = () => setStep((prev) => prev - 1);
 
+  // Progress bar component
+  const ProgressBar = () => {
+    const stepPercentage = (step / 3) * 100; // Calculate percentage based on the current step (3 steps in total)
+    return (
+      <div className="relative my-6">
+          <div className="w-full bg-gray-200 h-2 rounded-full">
+            <div
+              className={`h-2 rounded-full bg-green-600 transition-all duration-300`}
+              style={{ width: `${(step / 3) * 100}%` }}
+            ></div>
+          </div>
+          <div className="absolute top-0 left-0 w-full flex justify-between px-2 mt-2 text-gray-500">
+            <span className={`text-sm ${step >= 1 ? 'text-green-600 font-bold' : ''}`}>1</span>
+            <span className={`text-sm ${step >= 2 ? 'text-green-600 font-bold' : ''}`}>2</span>
+            <span className={`text-sm ${step >= 3 ? 'text-green-600 font-bold' : ''}`}>3</span>
+          </div>
+        </div>
+    );
+  };
+
   return (
     <div className="flex">
       <div className="w-2/3 my-10 max-w-6xl mx-auto">
+        {/* Progress bar */}
+        
+
         <div className="border-l-2 border-green-600 pl-6">
+        
           <h1 className="text-2xl font-semibold text-gray-700">
             Describe Your Equipment
           </h1>
+          <ProgressBar />
           <p className="text-md font-semibold mt-2 text-gray-500">
             Provide key details of your equipment to Sell Or Rent Out
           </p>
