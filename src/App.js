@@ -27,10 +27,13 @@ import CancellationPolicy from "../src/pages/CancellationPolicy/CancellationPoli
 import UpdateProfile from "../src/pages/updateProfile/index";
 import BookingHistory from "../src/pages/BookingHistory/BookingHistory.jsx";
 import EquipmentReport from "../src/pages/CustomerCare/EquipmentReport";
+import BlogPostPage from "../src/pages/Blog/BlogPostPage.jsx";
+
 
 // Import the ProtectedRoute component
 import ProtectedRoute from "./components/ProtectedRoute";
 import Alert from './utils/alert';
+import ChatbotPage from "./pages/Blog/ChatBot.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -78,6 +81,8 @@ function App() {
         <Route path="contact" element={<ContactUs />} />
         <Route path="product/:id" element={<Product />} />
         <Route path="equipment-report/:id" element={<EquipmentReport />} />
+        <Route path="blog" element={<BlogPostPage />} />
+        <Route path="chatbot" element={<ChatbotPage />} />
         
         {/* Protected Routes */}
         <Route

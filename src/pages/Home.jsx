@@ -30,6 +30,7 @@ const Home = () => {
       <Stats />
       {/* <Equipments /> */}
       {/* <Faqs /> */}
+      {/* <BlogPostPage /> */}
       {/* <ContactUs /> */}
     </div>
   );
