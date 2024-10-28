@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Dropdown from '../expanddropdown/Dropdown';
 import { DateRangePicker } from 'react-date-range';
 import { getBrandsByEquipmentType } from '../../api/equipments/equipments'; // Import the function that fetches brands from Firestore
+import './FilterSideBar.css'
 
 const FilterPanel = ({ equipList, perDay, setPerDay, selectionRange, setVisible1, visible1, setVisible2, visible2 }) => {
     const [selectedEquipment, setSelectedEquipment] = useState('');
@@ -20,7 +21,7 @@ const FilterPanel = ({ equipList, perDay, setPerDay, selectionRange, setVisible1
     };
 
     return (
-        <div className='w-1/4'>
+        <div className='max-w-sm md:w-1/4 p-4 filter-panel'>
             <div className='bg-[#68AC5D] py-4 px-1 prFilter'>
                 <h1 className='text-lg font-bold text-center text-white'>Product Filters</h1>
             </div>
@@ -64,31 +65,35 @@ const FilterPanel = ({ equipList, perDay, setPerDay, selectionRange, setVisible1
                 <p className='text-md pt-2 font-normal text-[#4F4F4F] pl-6'>From</p>
                 <div className='flex justify-center items-center'>
                     <button onClick={() => setVisible1(!visible1)} className="bg-darkgreen hover:bg-green-700 text-white font-normal text-sm py-1 text-center w-1/2 my-4 px-2 rounded">
-                        DD-MM-YYYY
+                        {selectionRange.startDate.toLocaleDateString('en-GB')}
                     </button>
                     <i className="ml-4 text-lg text-[#68AC5D] fa-solid fa-calendar"></i>
                 </div>
-                <div style={{ display: visible1 ? 'block' : 'none', height: '400px', width: '200px', zIndex: 1 }}>
+                <div className={`calendar-overlay ${visible1 ? 'block' : 'hidden'}`}>
                     <DateRangePicker
                         ranges={[selectionRange]}
                         minDate={new Date()}
                         rangeColors={["#68AC5D"]}
+                        onChange={() => setVisible1(false)}
                     />
+                    <button className="close-btn" onClick={() => setVisible1(false)}>Close</button>
                 </div>
 
                 <p className='text-md font-normal text-[#4F4F4F] pl-6'>To</p>
                 <div className='flex justify-center items-center'>
                     <button onClick={() => setVisible2(!visible2)} className="bg-darkgreen hover:bg-green-700 text-white font-normal text-sm py-1 text-center w-1/2 my-4 px-2 rounded">
-                        DD-MM-YYYY
+                        {selectionRange.endDate.toLocaleDateString('en-GB')}
                     </button>
                     <i className="ml-4 text-lg text-[#68AC5D] fa-solid fa-calendar"></i>
                 </div>
-                <div style={{ display: visible2 ? 'block' : 'none', height: '400px', width: '200px', zIndex: 1 }}>
+                <div className={`calendar-overlay ${visible2 ? 'block' : 'hidden'}`}>
                     <DateRangePicker
                         ranges={[selectionRange]}
                         minDate={new Date()}
                         rangeColors={["#68AC5D"]}
+                        onChange={() => setVisible2(false)}
                     />
+                    <button className="close-btn" onClick={() => setVisible2(false)}>Close</button>
                 </div>
             </div>
         </div>

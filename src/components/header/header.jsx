@@ -1,19 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 import logo from "../../img/logo.png";
-import userIcon from "../../img/user_icon.svg";
-import Login from "../../pages/Authentication/Login";
-import Register from "../../pages/Authentication/Register";
 import "./header.css";
-import { AuthContext } from "../../contexts/AuthContext"; // Import AuthContext
 
 const Header = () => {
   const navigate = useNavigate();
-  const { currentUser, logout } = useContext(AuthContext); // Use AuthContext to get user and logout function
-  const [show, setShow] = useState(false);
-  const [showLogin, setShowLogin] = useState(false);
-  const [showRegister, setShowRegister] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => setMenuOpen(!menuOpen);
 
   return (
     <div className="header">
@@ -23,8 +17,15 @@ const Header = () => {
         <h3>Kethi Sahhaayaak</h3>
       </div>
 
-      {/* Navigation Links */}
-      <nav className="navbar">
+      {/* Hamburger Menu Icon for Mobile */}
+      <div className="hamburger" onClick={toggleMenu}>
+        <div className={`line ${menuOpen ? "open" : ""}`}></div>
+        <div className={`line ${menuOpen ? "open" : ""}`}></div>
+        <div className={`line ${menuOpen ? "open" : ""}`}></div>
+      </div>
+
+      {/* Navigation Links - Visible on desktop, hidden on mobile */}
+      <nav className={`navbar ${menuOpen ? "open" : ""}`}>
         <ul>
           <li onClick={() => navigate("/")}>Home</li>
           <li onClick={() => navigate("/dashboard")}>Dashboard</li>
@@ -33,52 +34,6 @@ const Header = () => {
           <li onClick={() => navigate("/blog")}>Blog</li>
         </ul>
       </nav>
-
-      {/* Auth Section */}
-      <div className="auth-buttons">
-        {!currentUser ? (
-          <>
-            <button onClick={() => setShowLogin(true)}>Login</button>
-            <button onClick={() => setShowRegister(true)}>Sign Up</button>
-          </>
-        ) : (
-          <div
-            className="profile-section"
-            onMouseOver={() => setShow(true)}
-            onMouseLeave={() => setShow(false)}
-          >
-            <div className="profile-dropdown-trigger">
-              <img
-                className="rounded-full w-8 h-8 mr-3"
-                src={userIcon}
-                alt="profile_pic"
-              />
-              <p>{}</p> {/* Displaying user email or name */}
-            </div>
-            {show && (
-              <div className="profile-dropdown">
-                <p onClick={() => navigate("/update-profile")}>Profile</p>
-                <p
-                  onClick={() => {
-                    logout(); // Call logout from AuthContext
-                    navigate("/"); // Navigate back to home after logout
-                  }}
-                >
-                  Logout
-                </p>
-              </div>
-            )}
-          </div>
-        )}
-        {/* Google Translate */}
-        <div className="ml-4">
-          <div id="google_translate_element"></div>
-        </div>
-      </div>
-
-      {/* Modals for Login and Register */}
-      {showLogin && <Login onClick={setShowLogin} />}
-      {showRegister && <Register onClick={setShowRegister} />}
     </div>
   );
 };

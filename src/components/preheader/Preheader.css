@@ -1,0 +1,42 @@
+.preheader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #4caf50; /* Change this to your desired green shade */
+  color: black;
+  height: auto; /* Ensure the height adjusts based on content */
+  min-height: 50px; /* Set a minimum height for better layout control */
+  box-shadow: 0 4px 2px -2px gray;
+}
+
+.search-bar {
+  width: 200px; /* Adjust the width as needed */
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+}
+
+.language-dropdown {
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+.goog-te-banner-frame {                             
+  display: none !important;
+}
+
+.skiptranslate {
+  display: none !important;
+}
+
+
+.preheader-left {
+  margin-right: auto;
+}
+
+.ml-4 {
+  margin-left: 1rem;
+}

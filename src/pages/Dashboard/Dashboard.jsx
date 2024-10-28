@@ -5,7 +5,6 @@ import FilterPanel from '../../components/dashboard/FilterSidebar';
 import FeaturedProducts from '../../components/dashboard/featuredProduct';
 import { getEquipmentsWithUserData as getEquips } from '../../api/equipments/equipments';
 import Cookies from 'js-cookie';
-// import FilterContext from '../../contexts/FilterContext';
 
 const Dashboard = () => {
     const [equipments, setEquipments] = useState([]);
@@ -14,7 +13,8 @@ const Dashboard = () => {
     const [perDay, setPerDay] = useState(10000); // Ensure perDay is initialized with a large value
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
-    // Fetch equipment data and store it in cookies if not already present
+    const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false); // State for mobile filter panel
+
     useEffect(() => {
         const fetchEquipments = async () => {
             const cookieData = Cookies.get('equipments'); // Check if data is stored in cookies
@@ -34,7 +34,6 @@ const Dashboard = () => {
         fetchEquipments();
     }, []);
 
-    // Filter logic triggered on searchInput or perDay change
     useEffect(() => {
         let filtered = [...equipments]; // Ensure we're working with a copy of the original data
 
@@ -45,17 +44,14 @@ const Dashboard = () => {
             );
         }
 
-        // Per Day filter (Ensure it's checked correctly)
+        // Per Day filter
         if (perDay) {
             filtered = filtered.filter(equipment => equipment.daily_rental <= perDay);
         }
 
-        // Log filtered results to debug
-        console.log('Filtered Equipments:', filtered);
-
         // Set the filtered equipment state
         setFilteredEquipments(filtered);
-    }, [searchInput, perDay, equipments]); // Re-run filter whenever searchInput, perDay, or equipments change
+    }, [searchInput, perDay, equipments]);
 
     const selectionRange = {
         startDate: startDate,
@@ -66,22 +62,39 @@ const Dashboard = () => {
         "tractor",
         "Implements",
         "Harvestor"
-
-    ]
+    ];
 
     return (
         <div className='max-w-full mx-20 my-8'>
             <SearchBar setSearchInput={setSearchInput} />
+            
             <div className='flex mt-8'>
-                
-                <FilterPanel
-                    equipList={equipList}
-                    perDay={perDay}
-                    setPerDay={setPerDay}
-                    selectionRange={selectionRange}
-                />
-                
-                <FeaturedProducts filteredEquipments={equipments} />
+                {/* Show filter button on mobile */}
+                <button 
+                    className="filter-toggle-btn mobile-only" 
+                    onClick={() => setIsFilterPanelOpen(true)}
+                >
+                    Show Filters
+                </button>
+
+                {/* Filter Panel */}
+                <div className={`filter-panel ${isFilterPanelOpen ? "open" : ""}`}>
+                    <FilterPanel
+                        equipList={equipList}
+                        perDay={perDay}
+                        setPerDay={setPerDay}
+                        selectionRange={selectionRange}
+                    />
+                    <button 
+                        className="close-filter-btn mobile-only" 
+                        onClick={() => setIsFilterPanelOpen(false)}
+                    >
+                        Close Filters
+                    </button>
+                </div>
+
+                {/* Featured Products */}
+                <FeaturedProducts filteredEquipments={filteredEquipments} />
             </div>
         </div>
     );

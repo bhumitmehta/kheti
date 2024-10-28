@@ -26,13 +26,14 @@ import UpdateProfile from "../src/pages/updateProfile/index";
 import BookingHistory from "../src/pages/BookingHistory/BookingHistory.jsx";
 import EquipmentReport from "../src/pages/CustomerCare/EquipmentReport";
 import BlogPostPage from "../src/pages/Blog/BlogPostPage.jsx";
-
+import Preheader from "./components/preheader/Preheader.jsx";
 
 // Import the ProtectedRoute component
 import ProtectedRoute from "./components/ProtectedRoute";
 import Alert from './utils/alert';
 import ChatbotPage from "./pages/Blog/ChatBot.jsx";
 
+import ErrorBoundary from './utils/ErrorBoundary.js' 
 function App() {
   // const dispatch = useDispatch();
 
@@ -68,6 +69,8 @@ function App() {
 
   return (
     <>
+    <ErrorBoundary>
+    <Preheader /> 
       <Header />
       <Routes>
   
@@ -121,6 +124,7 @@ function App() {
       </Routes>
       <Alert/>
       <Footer />
+      </ErrorBoundary>
 
     </>
   );
