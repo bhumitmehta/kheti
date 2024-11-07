@@ -3,7 +3,6 @@ import React from 'react';
 const SearchBar = ({ searchInput, setSearchInput }) => {
     return (
         <div className='flex flex-col md:flex-row items-center justify-around p-4'>
-            <h1 className='text-xl md:text-2xl font-bold text-gray-600 text-center mb-2 md:mb-0'>Search Equipments</h1>
             <div className='w-full md:w-auto'>
                 <div className="input-group relative flex items-center w-full">
                     <input

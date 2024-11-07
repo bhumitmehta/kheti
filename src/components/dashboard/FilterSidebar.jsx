@@ -1,99 +1,124 @@
-import React, { useState, useEffect } from 'react';
-import Dropdown from '../expanddropdown/Dropdown';
+import React, { useState } from 'react';
 import { DateRangePicker } from 'react-date-range';
-import { getBrandsByEquipmentType } from '../../api/equipments/equipments'; // Import the function that fetches brands from Firestore
-import './FilterSideBar.css'
+import Dropdown from '../expanddropdown/Dropdown';
+import { getBrandsByEquipmentType } from '../../api/equipments/equipments';
+import './FilterSideBar.css';
 
-const FilterPanel = ({ equipList, perDay, setPerDay, selectionRange, setVisible1, visible1, setVisible2, visible2 }) => {
-    const [selectedEquipment, setSelectedEquipment] = useState('');
+const FilterPanel = ({ perDay, setPerDay, isOpen, setIsOpen }) => {
+    const [selectedEquipment, setSelectedEquipment] = useState([]);
     const [brandList, setBrandList] = useState([]);
+    const [selectionRange, setSelectionRange] = useState({
+        startDate: new Date(),
+        endDate: new Date(),
+        key: 'selection'
+    });
 
-    // Function to fetch brands dynamically when an equipment type is selected
+    const equipmentCategories = [
+        { name: 'Tractor', value: 'tractor' },
+        { name: 'Tillage', value: 'tillage' },
+        // Add more categories as needed
+    ];
+
     const fetchBrands = async (equipmentType) => {
         const brands = await getBrandsByEquipmentType(equipmentType);
-        setBrandList(brands.map((brand) => brand.name)); // Assuming the brand data has a 'name' field
+        setBrandList(brands.map((brand) => brand.name));
     };
 
-    // Handle when an equipment type is selected
-    const handleEquipmentChange = (equipmentType) => {
-        setSelectedEquipment(equipmentType);
-        fetchBrands(equipmentType); // Fetch corresponding brands
+    const handleEquipmentChange = (equipmentValue) => {
+        setSelectedEquipment((prevSelected) => {
+            if (prevSelected.includes(equipmentValue)) {
+                // Remove equipment if it is already selected
+                return prevSelected.filter((item) => item !== equipmentValue);
+            } else {
+                // Add equipment if it is not selected
+                return [...prevSelected, equipmentValue];
+            }
+        });
+        fetchBrands(equipmentValue);
     };
 
     return (
-        <div className='max-w-sm md:w-1/4 p-4 filter-panel'>
-            <div className='bg-[#68AC5D] py-4 px-1 prFilter'>
+        <div className={`filter-panel ${isOpen ? "open" : ""} shadow-lg border rounded-lg`}>
+            {/* Close button for mobile */}
+           {isOpen&&<button
+                onClick={() => setIsOpen(false)}
+                className="absolute top-2 right-2 text-gray-600 hover:text-gray-900 md:hidden lg:hidden"
+            >
+                ✕
+            </button>}
+
+            {/* Sidebar Header */}
+            <div className='bg-[#68AC5D] py-3'>
                 <h1 className='text-lg font-bold text-center text-white'>Product Filters</h1>
             </div>
 
-            <div className='border py-6'>
-                {/* Dropdown for Categories */}
-                <span className='text-lg mb-4 font-semibold text-[#4F4F4F] border-b-2 border-[#68AC5D] pb-1 ml-6'>
-                    <Dropdown 
-                        key={1} 
-                        title={"Categories"} 
-                        options={equipList} 
-                        onSelect={handleEquipmentChange} // Call when an equipment type is selected
-                    />
-                </span>
-
-                {/* Dropdown for Brands with dynamically fetched options */}
-                <div className='my-5'>
-                    <Dropdown 
-                        title="Brands" 
-                        options={brandList.length ? brandList : ["Select a category first"]} // Show brands or fallback text
-                    />
+            {/* Sidebar container */}
+            <div className='p-4'>
+                {/* Category Section */}
+                <span className='text-sm mb-4 font-semibold text-[#4F4F4F] border-b-2 border-[#68AC5D] pb-1 ml-4'>Categories:</span>
+                <div className='my-4 ml-4'>
+                    {equipmentCategories.map((equipment, index) => (
+                        <div key={index} className="flex items-center mb-2">
+                            <input
+                                type="checkbox"
+                                id={equipment.value}
+                                value={equipment.value}
+                                checked={selectedEquipment.includes(equipment.value)}
+                                onChange={() => handleEquipmentChange(equipment.value)}
+                                className="mr-2"
+                            />
+                            <label htmlFor={equipment.value} className='text-lg font-medium text-gray-800'>
+                                {equipment.name}
+                            </label>
+                        </div>
+                    ))}
                 </div>
 
-                {/* Price Range Slider */}
-                <span className='text-lg mb-4 font-semibold text-[#4F4F4F] border-b-2 border-[#68AC5D] pb-1 ml-6'>Price Range</span>
-                <div className='my-5'>
-                    <p className='text-md font-semibold text-[#4F4F4F] pl-8'>Price per day</p>
+                {/* Brand Section */}
+                <span className='text-sm mb-4 font-semibold text-[#4F4F4F] border-b-2 border-[#68AC5D] pb-1 ml-4'>Brands</span>
+                <div className='my-4 ml-4'>
+                    {brandList.length ? brandList.map((brand, index) => (
+                       <p className='text-sm font-large text-gray-700' key={index}>{brand}</p>
+                    )) : (
+                        <>
+                            <p className='text-sm font-medium text-gray-700'>Mahindra</p>
+                            <p className='text-sm font-medium text-gray-700'>John Deere</p>
+                            <p className='text-sm font-medium text-gray-700'>CLAAS India</p>
+                        </>
+                    )}
+                </div>
+
+                {/* Price Range Section */}
+                <span className='text-sm mb-4 font-semibold text-[#4F4F4F] border-b-2 border-[#68AC5D] pb-1 ml-4'>Price Range</span>
+                <div className='my-4 ml-4'>
+                    <p className='text-xs font-semibold text-gray-600'>Price per day</p>
                     <input
                         type="range"
                         min="0"
                         max="100000"
                         value={perDay}
                         onChange={(e) => setPerDay(e.target.value)}
-                        className="rangeInput form-range text-green-100 appearance-none w-full h-6 p-0 bg-transparent focus:outline-none focus:ring-0 focus:shadow-none"
+                        className="rangeInput appearance-none w-full h-6 bg-[#68AC5D] rounded focus:outline-none"
                     />
-                    <p className='text-md mb-3 font-normal text-[#4F4F4F] pl-8'>Rs. 0 to {perDay}</p>
+                    <p className='text-xs mt-1 font-normal text-gray-600'>Rs. 0 to {perDay}</p>
                 </div>
 
-                {/* Availability Date */}
-                <span className='text-lg mb-4 font-semibold text-[#4F4F4F] border-b-2 border-[#68AC5D] pb-1 ml-6'>Availability Date</span>
-                <p className='text-md pt-2 font-normal text-[#4F4F4F] pl-6'>From</p>
-                <div className='flex justify-center items-center'>
-                    <button onClick={() => setVisible1(!visible1)} className="bg-darkgreen hover:bg-green-700 text-white font-normal text-sm py-1 text-center w-1/2 my-4 px-2 rounded">
-                        {selectionRange.startDate.toLocaleDateString('en-GB')}
+                {/* Date Range Picker Section */}
+                <span className='text-sm mb-4 font-semibold text-[#4F4F4F] border-b-2 border-[#68AC5D] pb-1 ml-4'>Availability</span>
+                {/* <p className='text-xs mt-2 font-normal text-gray-600 ml-4'>From</p> */}
+                <div className='flex justify-center items-center my-2'>
+                    <button onClick={() => setIsOpen(!isOpen)} className="bg-darkgreen hover:bg-green-700 text-white font-medium text-xs py-1 w-full my-2 px-2 rounded">
+                        Select Date Range
                     </button>
-                    <i className="ml-4 text-lg text-[#68AC5D] fa-solid fa-calendar"></i>
+                    <i className="ml-2 text-sm text-[#68AC5D] fa-solid fa-calendar"></i>
                 </div>
-                <div className={`calendar-overlay ${visible1 ? 'block' : 'hidden'}`}>
+                <div style={{ display: isOpen ? 'block' : 'none' }}>
                     <DateRangePicker
                         ranges={[selectionRange]}
                         minDate={new Date()}
                         rangeColors={["#68AC5D"]}
-                        onChange={() => setVisible1(false)}
+                        onChange={(ranges) => setSelectionRange(ranges.selection)}
                     />
-                    <button className="close-btn" onClick={() => setVisible1(false)}>Close</button>
-                </div>
-
-                <p className='text-md font-normal text-[#4F4F4F] pl-6'>To</p>
-                <div className='flex justify-center items-center'>
-                    <button onClick={() => setVisible2(!visible2)} className="bg-darkgreen hover:bg-green-700 text-white font-normal text-sm py-1 text-center w-1/2 my-4 px-2 rounded">
-                        {selectionRange.endDate.toLocaleDateString('en-GB')}
-                    </button>
-                    <i className="ml-4 text-lg text-[#68AC5D] fa-solid fa-calendar"></i>
-                </div>
-                <div className={`calendar-overlay ${visible2 ? 'block' : 'hidden'}`}>
-                    <DateRangePicker
-                        ranges={[selectionRange]}
-                        minDate={new Date()}
-                        rangeColors={["#68AC5D"]}
-                        onChange={() => setVisible2(false)}
-                    />
-                    <button className="close-btn" onClick={() => setVisible2(false)}>Close</button>
                 </div>
             </div>
         </div>

@@ -110,12 +110,12 @@ const Footer = () => {
         </div>
 
         {/* Footer Background Image */}
-        <div className="flex-1 flex justify-center">
+        {/* <div className="flex-1  flex justify-center">
           <img src={footerBg} className="footerBgImg" alt="Footer Background" />
           <h1 className="text-xl text-white font-bold mt-6">
             A Farmer's Helper Website
           </h1>
-        </div>
+        </div> */}
       </div>
     </div>
   );

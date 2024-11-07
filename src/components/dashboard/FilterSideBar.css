@@ -1,15 +1,35 @@
-/* Full width filter panel on small screens */
+/* Base filter panel styling */
 .filter-panel {
-    width: 100%;
+    width: 250px; /* Default width for desktop */
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-right: 1px solid #ddd;
 }
 
-/* Responsive styling for mobile view */
+/* Styling for mobile view */
 @media (max-width: 768px) {
     .filter-panel {
         width: 100%; /* Full width on mobile */
+        border-right: none;
+        border-bottom: 1px solid #ddd; /* Optional: visually separate from main content */
+        padding: 15px;
     }
-    
-    /* Calendar overlay styling for mobile */
+
+    .filter-panel h1 {
+        font-size: 16px;
+        text-align: left;
+        margin-bottom: 10px;
+    }
+
+    .rangeInput {
+        width: 100%;
+    }
+
+    .filter-panel button {
+        margin: 5px auto;
+        font-size: 14px;
+    }
+
     .calendar-overlay {
         position: fixed;
         top: 0;
@@ -37,4 +57,96 @@
         border-radius: 4px;
         cursor: pointer;
     }
+}
+
+/* General styling for filter components */
+.filter-panel h1 {
+    font-size: 18px;
+    padding: 8px 0;
+    text-align: center;
+}
+
+.rangeInput {
+    width: 100%; /* Ensure the range input fits within the panel */
+}
+
+.filter-panel button {
+    margin: 10px auto;
+    display: block;
+}
+/* Base filter panel styling */
+.filter-panel {
+    width: 250px; /* Default width for desktop */
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-right: 1px solid #ddd;
+}
+
+/* Styling for mobile view */
+@media (max-width: 768px) {
+    .filter-panel {
+        width: 100%; /* Full width on mobile */
+        border-right: none;
+        border-bottom: 1px solid #ddd; /* Optional: visually separate from main content */
+        padding: 15px;
+    }
+
+    .filter-panel h1 {
+        font-size: 16px;
+        text-align: left;
+        margin-bottom: 10px;
+    }
+
+    .rangeInput {
+        width: 100%;
+    }
+
+    .filter-panel button {
+        margin: 5px auto;
+        font-size: 14px;
+    }
+
+    .calendar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(255, 255, 255, 0.95);
+        z-index: 20;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .calendar-overlay.hidden {
+        display: none;
+    }
+
+    .close-btn {
+        margin-top: 1rem;
+        padding: 0.5rem 1rem;
+        background-color: #ff4444;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+}
+
+/* General styling for filter components */
+.filter-panel h1 {
+    font-size: 18px;
+    padding: 8px 0;
+    text-align: center;
+}
+
+.rangeInput {
+    width: 100%; /* Ensure the range input fits within the panel */
+}
+
+.filter-panel button {
+    margin: 10px auto;
+    display: block;
 }

@@ -34,6 +34,7 @@ import Alert from './utils/alert';
 import ChatbotPage from "./pages/Blog/ChatBot.jsx";
 
 import ErrorBoundary from './utils/ErrorBoundary.js' 
+import CropRecommendationPage from "./pages/Crop-Reccomdation/index.js";
 function App() {
   // const dispatch = useDispatch();
 
@@ -85,7 +86,7 @@ function App() {
         <Route path="equipment-report/:id" element={<EquipmentReport />} />
         <Route path="blog" element={<BlogPostPage />} />
         <Route path="chatbot" element={<ChatbotPage />} />
-        
+        <Route path="crop-reccomadation" element={<CropRecommendationPage/>}/>
         {/* Protected Routes */}
         <Route
           path="dashboard"

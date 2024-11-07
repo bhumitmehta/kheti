@@ -10,14 +10,14 @@ const Dashboard = () => {
     const [equipments, setEquipments] = useState([]);
     const [filteredEquipments, setFilteredEquipments] = useState([]);
     const [searchInput, setSearchInput] = useState('');
-    const [perDay, setPerDay] = useState(10000); // Ensure perDay is initialized with a large value
+    const [perDay, setPerDay] = useState(10000); 
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
-    const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false); // State for mobile filter panel
+    const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
 
     useEffect(() => {
         const fetchEquipments = async () => {
-            const cookieData = Cookies.get('equipments'); // Check if data is stored in cookies
+            const cookieData = Cookies.get('equipments'); 
             if (cookieData) {
                 const parsedData = JSON.parse(cookieData);
                 setEquipments(parsedData);
@@ -27,7 +27,7 @@ const Dashboard = () => {
                 const data = await getEquips();
                 setEquipments(data);
                 setFilteredEquipments(data);
-                Cookies.set('equipments', JSON.stringify(data), { expires: 1 }); // Store in cookie for 1 day
+                Cookies.set('equipments', JSON.stringify(data), { expires: 1 });
                 console.log('Fetched and stored in cookies:', data);
             }
         };
@@ -35,7 +35,7 @@ const Dashboard = () => {
     }, []);
 
     useEffect(() => {
-        let filtered = [...equipments]; // Ensure we're working with a copy of the original data
+        let filtered = [...equipments];
 
         // Search filter
         if (searchInput) {
@@ -53,48 +53,40 @@ const Dashboard = () => {
         setFilteredEquipments(filtered);
     }, [searchInput, perDay, equipments]);
 
-    const selectionRange = {
-        startDate: startDate,
-        endDate: endDate,
-        key: 'selection'
-    };
     const equipList = [
         "tractor",
         "Implements",
-        "Harvestor"
+        "Harvester"
     ];
 
     return (
-        <div className='max-w-full mx-20 my-8'>
-            <SearchBar setSearchInput={setSearchInput} />
-            
-            <div className='flex mt-8'>
+        <div className='max-w-full md:mx-20'>
+            {/* <SearchBar setSearchInput={setSearchInput} /> */}
+
+            <div className='flex mt-0'>
                 {/* Show filter button on mobile */}
                 <button 
                     className="filter-toggle-btn mobile-only" 
-                    onClick={() => setIsFilterPanelOpen(true)}
+                    onClick={() => setIsFilterPanelOpen(!isFilterPanelOpen)} // Toggle filter panel
                 >
-                    Show Filters
+                    {isFilterPanelOpen ? 'Hide Filters' : 'Show Filters'}
                 </button>
 
                 {/* Filter Panel */}
-                <div className={`filter-panel ${isFilterPanelOpen ? "open" : ""}`}>
+                <div className='filter-panel-container'>
                     <FilterPanel
+                        isOpen={isFilterPanelOpen} // Pass the state
+                        setIsOpen={setIsFilterPanelOpen} // Pass the function to toggle
                         equipList={equipList}
                         perDay={perDay}
                         setPerDay={setPerDay}
-                        selectionRange={selectionRange}
                     />
-                    <button 
-                        className="close-filter-btn mobile-only" 
-                        onClick={() => setIsFilterPanelOpen(false)}
-                    >
-                        Close Filters
-                    </button>
                 </div>
 
                 {/* Featured Products */}
-                <FeaturedProducts filteredEquipments={filteredEquipments} />
+                <div className="featured-products-container">
+                    <FeaturedProducts filteredEquipments={equipments} />
+                </div>
             </div>
         </div>
     );

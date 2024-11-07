@@ -183,7 +183,7 @@ Question,Answer
 "What additional subsidy is available for projects in hilly or tribal areas?",In hilly or tribal areas a subsidy of 33.33% of the capital cost up to Rs. 60 lakh is available for projects.
 "What is the financial assistance for awareness and food festivals?",Rs. 1 lakh is provided for each food festival under the Intensive Millets Promotion (INSIMP) scheme.
 
-"Whom should farmers contact for marketing assistance?",Farmers should contact the nearest Office of Taluka Agriculture Officer for marketing assistance.
+"Whom should farmers contact for marketing assistance?" ,Farmers should contact the nearest Office of Taluka Agriculture Officer for marketing assistance.
 "Where can farmers find more information about agriculture marketing?",Farmers can visit the Agriculture Department's website at www.mahaagri.gov.in for more information.
 "What is the Kisan Call Center number for assistance?",Farmers can contact the Kisan Call Center at 1800-180-1551 for assistance.
 

@@ -112,6 +112,6 @@ def add_crop_production(crop_data: CropProductionInput):
         crops_ref.document(crop_data.crop_name).set({
             "production": crop_data.production_value
         })
-
+        
     return {"message": f"Updated production for {crop_data.crop_name}. New value: {new_production}"}
 # To run the server, use: `uvicorn filename:app --reload`

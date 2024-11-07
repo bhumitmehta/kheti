@@ -3,9 +3,9 @@ import ProductItem from '../../components/dashboard/ProductItem';
 
 const ProductList = ({ equipments }) => {
     return (
-        <div className='w-3/4 ml-8'>
+        <div className='w-3/4 ml-0'>
             <h1 className='text-2xl font-bold text-gray-600'>Featured Products</h1>
-            <div className='flex flex-wrap my-12'>
+            <div className='flex flex-wrap '>
                 {equipments?.map(equipment => (
                     <ProductItem key={equipment.id} equipment={equipment} />
                 ))}

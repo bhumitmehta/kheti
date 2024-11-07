@@ -1,17 +1,17 @@
+/* Preheader styling */
 .preheader {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #4caf50; /* Change this to your desired green shade */
+  background-color: #4caf50; /* Green background */
   color: black;
-  height: auto; /* Ensure the height adjusts based on content */
-  min-height: 50px; /* Set a minimum height for better layout control */
+  max-height: 45px;
   box-shadow: 0 4px 2px -2px gray;
 }
 
 .search-bar {
-  width: 200px; /* Adjust the width as needed */
+  width: 200px;
   padding: 8px;
   border-radius: 5px;
   border: none;
@@ -24,14 +24,10 @@
   border: none;
   cursor: pointer;
 }
-.goog-te-banner-frame {                             
-  display: none !important;
-}
 
-.skiptranslate {
-  display: none !important;
+.goog-te-banner-frame, .skiptranslate {                             
+  display: none !important; /* Hides Google Translate banner */
 }
-
 
 .preheader-left {
   margin-right: auto;
@@ -39,4 +35,58 @@
 
 .ml-4 {
   margin-left: 1rem;
+}
+
+/* Profile dropdown styling */
+.auth-buttons {
+  position: relative;
+}
+
+.profile-container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.profile-photo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.dropdown-menu {
+  display: none; /* Hidden by default */
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.profile-container:hover .dropdown-menu {
+  display: block; /* Show dropdown on hover */
+}
+
+.dropdown-menu button {
+  background: none;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  padding: 8px;
+  text-align: left;
+  width: 100%;
+  font-size: 14px;
+}
+
+.dropdown-menu button:hover {
+  background-color: #f0f0f0;
+}
+
+.dropdown-menu button:focus {
+  outline: none;
 }

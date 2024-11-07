@@ -3,31 +3,34 @@ import Sticky from "react-sticky-el";
 import UpdateForm from "./UpdateForm";
 import userIcon from "../../img/user_icon.svg";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebase"; // Assuming firebase.js is set up
 
 const Profile = () => {
   const navigate = useNavigate();
   const [edit, setEdit] = useState(false);
   const [user, setUser] = useState(null); // Initialize user state
 
-  // Check for access token and user data in cookies and redirect if token is absent
+  // Firebase Authentication state listener
   useEffect(() => {
-    const token = Cookies.get("access-token");
-    const userCookie = Cookies.get("user");
-
-    if (!token) {
-      navigate("/");
-    } else if (userCookie) {
-      try {
-        // Attempt to parse the user cookie
-        console.log({userCookie})
-        const parsedUser = JSON.parse(userCookie);
-        setUser(parsedUser);
-      } catch (error) {
-        console.error("Invalid user cookie format", error);
-        setUser(null); // Handle error gracefully
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        // User is signed in
+        const userData = {
+          uid: currentUser.uid,
+          email: currentUser.email,
+          first_name: currentUser.displayName?.split(" ")[0] || "N/A",
+          last_name: currentUser.displayName?.split(" ")[1] || "N/A",
+          profile_image: currentUser.photoURL || userIcon, // Fallback to userIcon
+        };
+        setUser(userData);
+      } else {
+        // No user is signed in, redirect to login
+        navigate("/login");
       }
-    }
+    });
+
+    return () => unsubscribe(); // Clean up the listener when the component unmounts
   }, [navigate]);
 
   if (!user) return <div>Loading...</div>; // Show a loader until user data is available
@@ -53,7 +56,7 @@ const Profile = () => {
           <div className="w-full md:w-1/3 flex justify-center">
             <img
               className="w-48 h-48 rounded-full border shadow-md"
-              src={user.profile_image ? user.profile_image : userIcon}
+              src={user.profile_image}
               alt="Profile"
             />
           </div>

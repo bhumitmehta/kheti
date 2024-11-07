@@ -59,15 +59,15 @@
     background: #FFFFFF !important;
     cursor: pointer;
     border-radius: 50%;
-  }
+}
   
-  .rangeInput::-moz-range-thumb {
+.rangeInput::-moz-range-thumb {
     width: 10px;
     height: 10px;
     background: #FFFFFF !important;
     cursor: pointer;
     border-radius: 50%;
-  }
+}
 
 .searchDash::placeholder {
     font-weight: 600;
@@ -78,14 +78,13 @@
     z-index: 1;
 }
 
-
 .tooltip {
     position: relative;
     display: inline-block;
     /* border-bottom: 1px dotted black; */
-  }
-  
-  .tooltip .tooltiptext {
+}
+
+.tooltip .tooltiptext {
     visibility: hidden;
     width: 160px;
     height: 30px;
@@ -95,24 +94,22 @@
     text-align: center;
     border-radius: 6px;
     padding: 5px 0;
-
     text-align: left;
     padding-left: 14px;
     padding-bottom: 16px;
     padding-top: 1px;
     word-spacing: 4px;
     letter-spacing: 1px;
-  
     /* Position the tooltip */
     position: absolute;
     z-index: 1;
-  }
-  
-  .tooltip:hover .tooltiptext {
-    visibility: visible;
-  }
+}
 
-  /* Hide filter toggle button on desktop */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+/* Hide filter toggle button on desktop */
 .mobile-only {
     display: none;
 }
@@ -153,4 +150,24 @@
         margin-top: 1rem;
         border-radius: 4px;
     }
+}
+
+
+
+/* Hide scrollbar for webkit-based browsers (Chrome, Safari) */
+.filter-panel-container::-webkit-scrollbar {
+    display: none;
+}
+
+.featured-products-container {
+    flex: 1;
+    margin-left: 10px; /* To create space for the filter panel */
+    overflow-y: scroll; /* Allows scrolling through featured products */
+    height: 100vh; /* Ensures the content area takes full height */
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+
+/* Hide scrollbar for webkit-based browsers (Chrome, Safari) */
+.featured-products-container::-webkit-scrollbar {
+    display: none;
 }

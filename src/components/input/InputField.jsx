@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './InputField.css'; // Assuming the CSS is in a separate file
 
-const InputField = ({ label, placeholder, onChange, value, type, required }) => {
+const InputField = ({ label, placeholder, onChange, value, type, required,name }) => {
   const [isFocused, setIsFocused] = useState(false);
   const handleFocus = () => setIsFocused(true);
   const handleBlur = () => setIsFocused(false);
@@ -18,6 +18,7 @@ const InputField = ({ label, placeholder, onChange, value, type, required }) => 
             onFocus={handleFocus}
             onBlur={handleBlur}
             required={required}
+            name = {name}
           />
           <span className="highlight"></span>
           <span className="bar"></span>
