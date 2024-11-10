@@ -88,15 +88,17 @@ const Product = () => {
 
     return (
         <div>
-            <div className='productHero'>
+            <div className='productHero flex flex-wrap h-fit w-30'>
                 <Carousel
                     autoplay
                     infiniteLoop
                     showStatus={false}
                     showIndicators={false}
-                    showThumbs={false}
+                    showThumbs={true}
                     interval={3000}
-                    dynamicHeight
+                    dynamicHeight={50}
+                    fixedHieght = {50}
+
                 >
                     {equipment?.images?.map((image, index) => (
                         <div key={index} className="relative">
@@ -157,6 +159,14 @@ const Product = () => {
                             <h3 className='text-md text-gray-500 font-bold'>Fuel Capacity </h3>
                             <h1 className='text-sm text-gray-500 font-semibold'>{equipment?.specs?.fuel_capacity}</h1>
                         </div>}
+                    </div>
+                    <div className='flex justify-between border-b-2 py-6 items-center'>
+                        <div>
+                            <h2 className='text-md text-gray-500 font-bold'>Availibility</h2>
+                            <h2 className='text-sm text-gray-500 font-semibold'>{formattedStartDate} to {formattedEndDate}</h2>
+                        </div>
+                        
+                      
                     </div>
                     
                     <div className='py-6 flex justify-center border-b-2'>
