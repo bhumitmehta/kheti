@@ -4,6 +4,7 @@ import numpy as np
 from fastapi import FastAPI
 from pydantic import BaseModel
 from firebase_admin import credentials, firestore, initialize_app
+from fastapi.middleware.cors import CORSMiddleware
 
 # Initialize Firebase
 cred = credentials.Certificate("kehtisahayaak-firebase-adminsdk-1kbh4-1f833b8870.json")  # Add your Firebase service account key here
@@ -20,6 +21,14 @@ crop_names = ['apple', 'banana', 'blackgram', 'chickpea', 'coconut', 'coffee', '
 
 # Define FastAPI instance
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # Add your frontend URL
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Define the request model
 class CropInput(BaseModel):
@@ -114,4 +123,4 @@ def add_crop_production(crop_data: CropProductionInput):
         })
         
     return {"message": f"Updated production for {crop_data.crop_name}. New value: {new_production}"}
-# To run the server, use: `uvicorn filename:app --reload`
+# To run the server, use: `uvicorn :app --reload`

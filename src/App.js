@@ -34,7 +34,7 @@ import Alert from './utils/alert';
 import ChatbotPage from "./pages/Blog/ChatBot.jsx";
 
 import ErrorBoundary from './utils/ErrorBoundary.js' 
-import CropRecommendationPage from "./pages/Crop-Reccomdation/index.js";
+import CropRecommendationPage from "./pages/Crop-Reccomdation/CropPredictionPage.jsx";
 function App() {
   // const dispatch = useDispatch();
 
@@ -70,8 +70,8 @@ function App() {
 
   return (
     <>
-    <ErrorBoundary>
-    <Preheader /> 
+    {/* <ErrorBoundary>
+    <Preheader />  */}
       <Header />
       <Routes>
   
@@ -125,7 +125,7 @@ function App() {
       </Routes>
       <Alert/>
       <Footer />
-      </ErrorBoundary>
+      {/* </ErrorBoundary> */}
 
     </>
   );
